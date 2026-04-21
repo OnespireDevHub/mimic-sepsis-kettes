@@ -11,22 +11,32 @@ from sklearn.pipeline import Pipeline
 
 def get_model():
     def medical_feature_engineering(X):
-        # HR=0, SBP=3, BUN=15, Creatinine=19 per FEATURE_COLUMNS in dataset_loader.py
-        # Always keep these transformation under the get_model() function!
+        # Per FEATURE_COLUMNS in dataset_loader.py:
+        # HR=0, SBP=3, MAP=4, DBP=5, BUN=15, Creatinine=19
+        # Always keep these transformations under the get_model() function!
+
         hr = X[:, [0]]
         sbp = X[:, [3]]
+        map_ = X[:, [4]]
+        dbp = X[:, [5]]
         bun = X[:, [15]]
         creat = X[:, [19]]
+
         shock_index = hr / (sbp + 1e-6)
         bun_creat_ratio = bun / (creat + 1e-6)
-        return np.hstack([X, shock_index, bun_creat_ratio])
+        pulse_pressure = sbp - dbp
+        hr_map_ratio = hr / (map_ + 1e-6)
+
+        return np.hstack(
+            [X, shock_index, bun_creat_ratio, pulse_pressure, hr_map_ratio]
+        )
 
     model = Pipeline(
         [
             ("engineering", FunctionTransformer(medical_feature_engineering)),
             # ("poly", PolynomialFeatures(degree=2, interaction_only=True)),
             ("scaler", StandardScaler()),
-            ("clf", LogisticRegression(warm_start=True, max_iter=1)),
+            ("clf", LogisticRegression(warm_start=True, max_iter=10)),
         ]
     )
 
