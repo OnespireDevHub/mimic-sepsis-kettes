@@ -27,9 +27,10 @@ def get_model():
         pulse_pressure = sbp - dbp
         hr_map_ratio = hr / (map_ + 1e-6)
         map_sbp_ratio = map_ / (sbp + 1e-6)
+        lactate_hr = lactate * hr
 
         return np.hstack(
-            [X, shock_index, bun_creat_ratio, pulse_pressure, hr_map_ratio, map_sbp_ratio]
+            [X, shock_index, bun_creat_ratio, pulse_pressure, hr_map_ratio, map_sbp_ratio, lactate_hr]
         )
 
     model = Pipeline(
