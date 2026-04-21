@@ -3,7 +3,7 @@
 
 echo "Packaging final submission..."
 
-if [ ! -f "submission/final_model.pkl" ]; then
+if [ ! -f "final_model.pkl" ]; then
     echo "ERROR: submission/final_model.pkl not found!"
     echo "Did your server finish all rounds successfully?"
     exit 1
@@ -13,7 +13,7 @@ fi
 TARGET_DIR="/home/hackadmin/submission"
 
 if [ -d "$TARGET_DIR" ]; then
-    cp submission/final_model.pkl "$TARGET_DIR/final_model.pkl"
+    cp final_model.pkl "$TARGET_DIR/final_model.pkl"
     echo "Success! Model has been copied to $TARGET_DIR."
     echo "The organizers will collect it automatically at the deadline."
 else
