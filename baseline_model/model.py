@@ -26,9 +26,10 @@ def get_model():
         bun_creat_ratio = bun / (creat + 1e-6)
         pulse_pressure = sbp - dbp
         hr_map_ratio = hr / (map_ + 1e-6)
+        map_sbp_ratio = map_ / (sbp + 1e-6)
 
         return np.hstack(
-            [X, shock_index, bun_creat_ratio, pulse_pressure, hr_map_ratio]
+            [X, shock_index, bun_creat_ratio, pulse_pressure, hr_map_ratio, map_sbp_ratio]
         )
 
     model = Pipeline(
@@ -36,7 +37,7 @@ def get_model():
             ("engineering", FunctionTransformer(medical_feature_engineering)),
             # ("poly", PolynomialFeatures(degree=2, interaction_only=True)),
             ("scaler", StandardScaler()),
-            ("clf", LogisticRegression(warm_start=True, max_iter=10, class_weight={0:1, 1:4})),
+            ("clf", LogisticRegression(warm_start=True, max_iter=10, class_weight={0:1, 1:3})),
         ]
     )
 
