@@ -21,6 +21,7 @@ def get_model():
         dbp = X[:, [5]]
         bun = X[:, [15]]
         creat = X[:, [19]]
+        lactate = X[:, [VALAMILYEN_INDEX]]
 
         shock_index = hr / (sbp + 1e-6)
         bun_creat_ratio = bun / (creat + 1e-6)
