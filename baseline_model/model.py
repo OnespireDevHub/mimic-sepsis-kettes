@@ -36,7 +36,7 @@ def get_model():
             ("engineering", FunctionTransformer(medical_feature_engineering)),
             # ("poly", PolynomialFeatures(degree=2, interaction_only=True)),
             ("scaler", StandardScaler()),
-            ("clf", LogisticRegression(warm_start=True, max_iter=10, class_weight={0:1, 1:3})),
+            ("clf", LogisticRegression(warm_start=True, max_iter=10, class_weight={0:1, 1:4})),
         ]
     )
 
